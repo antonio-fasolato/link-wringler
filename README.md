@@ -1,12 +1,13 @@
 # Link Finder - Estensione Chrome
 
-Un'estensione Chrome che trova e apre tutti i link presenti in una selezione di testo sulla pagina.
+Un'estensione Chrome che trova tutti i link presenti in una selezione di testo sulla pagina e permette di aprirli o copiarli negli appunti.
 
 ## Funzionalità
 
 - **Selezione del testo**: Seleziona una porzione di testo sulla pagina web
-- **Menu contestuale**: Clicca con il tasto destro e seleziona "Apri tutti i link nella selezione"
-- **Apertura automatica**: Tutti i link trovati nella selezione vengono aperti in nuove schede
+- **Menu contestuale doppio**: 
+  - "Apri tutti i link nella selezione" - Apre tutti i link trovati in nuove schede
+  - "Copia tutti i link nella selezione" - Copia tutti i link negli appunti (separati da newline)
 - **Validazione**: Mostra un alert se non c'è selezione o se non ci sono link nella selezione
 
 ## Installazione
@@ -19,11 +20,21 @@ Un'estensione Chrome che trova e apre tutti i link presenti in una selezione di 
 
 ## Come usare
 
+### Aprire i link
+
 1. Naviga su qualsiasi pagina web
 2. Seleziona una porzione di testo che contiene dei link
 3. Clicca con il tasto destro sulla selezione
 4. Seleziona "Apri tutti i link nella selezione" dal menu contestuale
 5. Tutti i link verranno aperti in nuove schede
+
+### Copiare i link negli appunti
+
+1. Naviga su qualsiasi pagina web
+2. Seleziona una porzione di testo che contiene dei link
+3. Clicca con il tasto destro sulla selezione
+4. Seleziona "Copia tutti i link nella selezione" dal menu contestuale
+5. Tutti i link verranno copiati negli appunti, separati da newline (uno per riga)
 
 ## Nota sulle icone
 
@@ -46,7 +57,8 @@ link-finder/
 
 - Chrome Extensions Manifest V3
 - JavaScript ES6+
-- Chrome APIs (contextMenus, scripting, activeTab)
+- Chrome APIs (contextMenus, scripting, activeTab, clipboardWrite)
+- Clipboard API (navigator.clipboard)
 
 ## Licenza
 
