@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Link Finder",
+  "version": "1.0",
+  "description": "Trova tutti i link nella selezione della pagina e aprili in nuove schede",
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
