@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina di Test Applicativo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+        }
+        h1 { color: #2c3e50; border-bottom: 2px solid #eee; }
+        .test-container { background: #f9f9f9; padding: 20px; border-radius: 8px; }
+        a { color: #3498db; }
+        a:hover { text-decoration: none; color: #2980b9; }
+    </style>
+</head>
+<body>
+
+    <h1>Test Suite: Navigazione e Link</h1>
+    
+    <div class="test-container">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Puoi consultare la <a href="https://it.wikipedia.org/wiki/Pagina_principale" target="_blank">Wikipedia Italiana</a> per riferimenti storici. 
+            Ut enim ad minim veniam, quis nostrud <a href="javascript:alert('Hai attivato un popup di test!');">esegui azione popup</a> exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+
+        <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Se cerchi informazioni tecniche, visita <a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a>. 
+            Excepteur sint occaecat <a href="#">link vuoto (ancora)</a> cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+
+        <p>
+            Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, 
+            nec luctus magna felis sollicitudin mauris. <a href="javascript:console.log('Log di test nel browser'); alert('Secondo popup di sistema');">Secondo trigger JS</a>. 
+            Incentiviamo l'uso di <a href="https://www.google.com" target="_blank">Google Search</a> per testare i redirect esterni.
+        </p>
+
+        <p>
+            Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. 
+            Donec lobortis risus a elit. Etiam tempor. <a href="#">Un altro link morto qui</a>. 
+            Infine, ecco un link a <a href="https://github.com" target="_blank">GitHub</a> per testare repository esterne.
+        </p>
+    </div>
+
+</body>
+</html>
