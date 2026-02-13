@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "file": "${workspaceFolder}/test.html",
+      "webRoot": "${workspaceFolder}",
+      "runtimeArgs": [
+        "--load-extension=${workspaceFolder}",
+        "--remote-debugging-port=9222"
+      ]
+    },
+    {
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "request": "attach",
+      "type": "chrome",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

@@ -7,6 +7,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+function extractTextualLinks(selectedText) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+  const foundUrls = selectedText.match(urlRegex);
+  const cleanUrls = foundUrls ? foundUrls.map(url => url.replace(/[.,;]$/, "")) : [];
+  console.log(`Links extracted from the plain text: ${cleanUrls}`);
+  return cleanUrls;
+}
+
 function findAndOpenLinks() {
   const selection = window.getSelection();
   
@@ -22,12 +30,6 @@ function findAndOpenLinks() {
   
   const links = container.querySelectorAll("a[href]");
   
-  if (links.length === 0) {
-    // Use "noLinksFound" key
-    alert(chrome.i18n.getMessage("noLinksFound"));
-    return;
-  }
-  
   const urls = new Set();
   links.forEach(link => {
     const href = link.href;
@@ -35,18 +37,21 @@ function findAndOpenLinks() {
       urls.add(href);
     }
   });
-  
-  if (urls.size === 0) {
+
+  const urlsFromText = extractTextualLinks(selection.toString().trim());
+  const allUrls = [...urls, ...urlsFromText];
+
+  if (allUrls.length === 0) {
     // Use "noValidLinksFound" key
     alert(chrome.i18n.getMessage("noValidLinksFound"));
     return;
   }
   
-  urls.forEach(url => {
+  allUrls.forEach(url => {
     window.open(url, "_blank");
   });
   
-  console.log(`Link Finder: ${urls.size} link aperti.`);
+  console.log(`Link Finder: ${allUrls.length} link aperti.`);
 }
 
 function findAndCopyLinks() {
@@ -56,7 +61,7 @@ function findAndCopyLinks() {
     alert(chrome.i18n.getMessage("noTextSelected"));
     return;
   }
-  
+
   const range = selection.getRangeAt(0);
   const container = document.createElement("div");
   container.appendChild(range.cloneContents());
@@ -75,17 +80,21 @@ function findAndCopyLinks() {
       urls.add(href);
     }
   });
-  
-  if (urls.size === 0) {
+
+  const urlsFromText = extractTextualLinks(selection.toString().trim());
+
+  const allUrls = [...urls, ...urlsFromText];
+
+  if (allUrls.size === 0) {
     alert(chrome.i18n.getMessage("noValidLinksFound"));
     return;
   }
   
-  const linksText = Array.from(urls).join("\n");
-  
+  const linksText = Array.from(allUrls).join("\n");
+
   navigator.clipboard.writeText(linksText).then(() => {
     // Pass the count to the "linksCopied" placeholder
-    const successMsg = chrome.i18n.getMessage("linksCopied", [urls.size.toString()]);
+    const successMsg = chrome.i18n.getMessage("linksCopied", [allUrls.length.toString()]);
     alert(successMsg);
     console.log(`Link Finder: ${successMsg}`);
   }).catch(err => {
