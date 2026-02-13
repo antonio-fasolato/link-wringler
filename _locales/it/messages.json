@@ -1,0 +1,44 @@
+{
+  "extName": {
+    "message": "Link Finder",
+    "description": "Nome dell'estensione"
+  },
+  "extDescription": {
+    "message": "Trova tutti i link nella selezione della pagina e aprili in nuove schede",
+    "description": "Descrizione dell'estensione"
+  },
+  "contextMenuOpenLinks": {
+    "message": "Apri tutti i link nella selezione",
+    "description": "Voce del menu contestuale per aprire i link"
+  },
+  "contextMenuCopyLinks": {
+    "message": "Copia tutti i link nella selezione",
+    "description": "Voce del menu contestuale per copiare i link"
+  },
+  "noTextSelected": {
+    "message": "Nessun testo selezionato. Per favore, seleziona una porzione della pagina che contiene link.",
+    "description": "Messaggio quando non c'è testo selezionato"
+  },
+  "noLinksFound": {
+    "message": "Nessun link trovato nella selezione.",
+    "description": "Messaggio quando non ci sono link nella selezione"
+  },
+  "noValidLinksFound": {
+    "message": "Nessun link valido trovato nella selezione.",
+    "description": "Messaggio quando non ci sono link validi nella selezione"
+  },
+  "linksCopied": {
+    "message": "$COUNT$ link copiati negli appunti.",
+    "description": "Messaggio di conferma per i link copiati",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "copyError": {
+    "message": "Errore durante la copia negli appunti.",
+    "description": "Messaggio di errore durante la copia"
+  }
+}

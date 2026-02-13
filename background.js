@@ -2,13 +2,13 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "linkFinder",
-    title: "Apri tutti i link nella selezione",
+    title: chrome.i18n.getMessage("contextMenuOpenLinks"), 
     contexts: ["selection"]
   });
   
   chrome.contextMenus.create({
     id: "linkCopier",
-    title: "Copia tutti i link nella selezione",
+    title: chrome.i18n.getMessage("contextMenuCopyLinks"),
     contexts: ["selection"]
   });
 });
