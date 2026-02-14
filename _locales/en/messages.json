@@ -3,10 +3,6 @@
     "message": "Link Finder",
     "description": "Extension name"
   },
-  "extDescription": {
-    "message": "Find all links in the page selection and open them in new tabs",
-    "description": "Extension description"
-  },
   "contextMenuOpenLinks": {
     "message": "Open all links in selection",
     "description": "Context menu item to open links"
@@ -55,5 +51,13 @@
   },
   "settingsSaved": {
     "message": "Settings saved."
+  },
+  "extDescription": {
+    "message": "Quickly extract, open, or copy all links from your text selection. Supports both hyperlinked tags and plain-text URLs.",
+    "description": "Short description for the store"
+  },
+  "longDescription": {
+    "message": "Link Finder is the ultimate productivity tool for researchers, developers, and power users. Simply highlight a section of a webpage, right-click, and instantly manage all links within that selection.\n\nKey Features:\n- Open All Links: Launch every URL in the selection into new background tabs with one click.\n- Copy to Clipboard: Extract all URLs and save them to your clipboard as a clean list.\n- Plain Text Extraction: Advanced regex support finds URLs even if they aren't clickable links.\n- Customizable: Toggle between strict and relaxed URL detection in the settings.\n- Privacy Focused: Works entirely locally on your machine with no data collection.",
+    "description": "The detailed description shown on the web store page"
   }
 }

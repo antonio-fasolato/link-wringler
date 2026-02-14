@@ -3,10 +3,6 @@
     "message": "Link Finder",
     "description": "Nome dell'estensione"
   },
-  "extDescription": {
-    "message": "Trova tutti i link nella selezione della pagina e aprili in nuove schede",
-    "description": "Descrizione dell'estensione"
-  },
   "contextMenuOpenLinks": {
     "message": "Apri tutti i link nella selezione",
     "description": "Voce del menu contestuale per aprire i link"
@@ -55,5 +51,13 @@
   },
   "settingsSaved": {
     "message": "Impostazioni salvate."
-  }
+  },
+"extDescription": {
+  "message": "Estrai, apri o copia rapidamente tutti i link dalla tua selezione. Supporta sia i tag HTML che gli URL in formato testo semplice.",
+  "description": "Breve descrizione per lo store"
+},
+"longDescription": {
+  "message": "Link Finder è lo strumento di produttività definitivo per ricercatori, sviluppatori e utenti esperti. Basta evidenziare una sezione di una pagina web, fare clic con il tasto destro e gestire istantaneamente tutti i link contenuti.\n\nCaratteristiche principali:\n- Apri tutti i link: Apri ogni URL della selezione in nuove schede con un solo clic.\n- Copia negli appunti: Estrai tutti gli URL e salvali come elenco pulito.\n- Estrazione testo semplice: Il supporto regex avanzato trova gli URL anche se non sono link cliccabili.\n- Personalizzabile: Scegli tra rilevamento URL rigoroso o flessibile nelle impostazioni.\n- Rispetto della privacy: Funziona interamente in locale senza alcuna raccolta dati.",
+  "description": "La descrizione dettagliata mostrata nella pagina dello store"
+}
 }
