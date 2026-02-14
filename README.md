@@ -1,65 +1,81 @@
-# Link Wringer - Estensione Chrome
+# 🔗 Link Wringer
 
-Un'estensione Chrome che trova tutti i link presenti in una selezione di testo sulla pagina e permette di aprirli o copiarli negli appunti.
+**Effortlessly extract, open, and manage URLs from any text selection.**
 
-## Funzionalità
+Link Wringer is a lightweight, privacy-focused Chrome extension designed for power users. Whether you are dealing with properly formatted HTML links or raw text URLs (like `example.com`), this tool helps you process them in bulk with a single click.
 
-- **Selezione del testo**: Seleziona una porzione di testo sulla pagina web
-- **Menu contestuale doppio**: 
-  - "Apri tutti i link nella selezione" - Apre tutti i link trovati in nuove schede
-  - "Copia tutti i link nella selezione" - Copia tutti i link negli appunti (separati da newline)
-- **Validazione**: Mostra un alert se non c'è selezione o se non ci sono link nella selezione
+---
 
-## Installazione
+## 🚀 Features
 
-1. Scarica o clona questa repository
-2. Apri Chrome e vai su `chrome://extensions/`
-3. Attiva la "Modalità sviluppatore" nell'angolo in alto a destra
-4. Clicca su "Carica estensione non pacchettizzata"
-5. Seleziona la cartella del progetto `link-wringer`
+* **Smart Extraction**: Scans your selection for both `<a>` tags and plain-text URLs using advanced Regex.
+* **Bulk Open**: Open every discovered link in a new background tab instantly.
+* **Bulk Copy**: Clean and extract URLs directly to your clipboard, formatted as a tidy list.
+* **Customizable Settings**: Use the Options page to toggle plain-text extraction or adjust Regex strictness for better accuracy.
+* **Internationalized**: Full support for English and Italian locales.
 
-## Come usare
+---
 
-### Aprire i link
+## 🛠️ Installation
 
-1. Naviga su qualsiasi pagina web
-2. Seleziona una porzione di testo che contiene dei link
-3. Clicca con il tasto destro sulla selezione
-4. Seleziona "Apri tutti i link nella selezione" dal menu contestuale
-5. Tutti i link verranno aperti in nuove schede
+### Developer Mode (Manual)
 
-### Copiare i link negli appunti
+1. **Clone/Download** this repository to your local machine.
+2. Open Google Chrome and navigate to `chrome://extensions/`.
+3. Enable **"Developer mode"** using the toggle in the top-right corner.
+4. Click **"Load unpacked"** and select the `link-wringer` project folder.
 
-1. Naviga su qualsiasi pagina web
-2. Seleziona una porzione di testo che contiene dei link
-3. Clicca con il tasto destro sulla selezione
-4. Seleziona "Copia tutti i link nella selezione" dal menu contestuale
-5. Tutti i link verranno copiati negli appunti, separati da newline (uno per riga)
+---
 
-## Nota sulle icone
+## 📖 How to Use
 
-Il file [`manifest.json`](manifest.json:12) richiede tre icone (16x16, 48x48, 128x128 pixel). Queste icone non sono incluse nel progetto. Per un funzionamento completo, puoi:
+1. **Select**: Highlight any portion of text on a webpage.
+2. **Right-Click**: Open the context menu on your selection.
+3. **Choose Action**:
+* **Open Links**: Launches all URLs into new tabs.
+* **Copy Links**: Copies a newline-separated list of URLs to your clipboard.
 
-- Creare le tue icone personalizzate
-- Rimuovere la sezione "icons" dal file manifest.json se vuoi utilizzare l'estensione senza icone
 
-## Struttura del progetto
+4. **Configure**: Right-click the extension icon and select **Options** to customize link detection behavior.
 
-```
+---
+
+## 📁 Project Structure
+
+```text
 link-wringer/
-├── manifest.json    # Configurazione dell'estensione
-├── background.js    # Gestione del menu contestuale
-├── content.js       # Logica per trovare e aprire i link
-└── README.md        # Questo file
+├── _locales/       # Translation files (EN, IT)
+├── manifest.json   # Extension configuration & permissions
+├── background.js   # Context menu creation & event handling
+├── content.js      # Link extraction logic & DOM interaction
+├── options.html    # Settings UI
+├── options.js      # Settings logic & storage management
+└── README.md       # Project documentation
+
 ```
 
-## Tecnologie utilizzate
+---
 
-- Chrome Extensions Manifest V3
-- JavaScript ES6+
-- Chrome APIs (contextMenus, scripting, activeTab, clipboardWrite)
-- Clipboard API (navigator.clipboard)
+## 🔒 Permissions & Privacy
 
-## Licenza
+This extension is built with the **Manifest V3** standard, prioritizing security and performance. It uses the following permissions:
 
-Questo progetto è open source e disponibile per uso personale e commerciale.
+* `contextMenus`: To add "Open" and "Copy" actions to your right-click menu.
+* `activeTab`: To access the selection on your currently active page.
+* `scripting`: To execute the extraction logic.
+* `storage`: To save your custom preferences.
+* `clipboardWrite`: To save extracted links to your clipboard.
+
+**Privacy Note:** Link Wringer works entirely locally. No browsing data, selections, or URLs are ever collected, stored, or transmitted to external servers.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**. Feel free to use, modify, and distribute it for personal or commercial projects.
+
+---
+
+### Next Step
+
+Since your `README.md` mentions that icons are missing, would you like me to generate a prompt you can use in an AI image generator to create the **16x16**, **48x48**, and **128x128** icons in a consistent style?
