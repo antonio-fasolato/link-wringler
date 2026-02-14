@@ -1,0 +1,31 @@
+name: Package Chrome Extension
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Zip File
+        run: |
+          # The run_number provides the $V for your build number
+          ZIP_NAME="link-wringer-extension-1.${{ github.run_number }}.zip"
+
+          # Zip the specific files and directories requested
+          zip -r "$ZIP_NAME" _locales icons *.js *.html manifest.json -x "*.DS_Store*"
+
+          # Move the filename to an environment variable for the next step
+          echo "ZIP_FILENAME=$ZIP_NAME" >> $GITHUB_ENV
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension-build
+          path: ${{ env.ZIP_FILENAME }}
