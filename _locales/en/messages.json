@@ -40,5 +40,20 @@
   "copyError": {
     "message": "Error copying to clipboard.",
     "description": "Error message during copy operation"
+  },
+  "optionsTitle": {
+    "message": "Link Finder Settings"
+  },
+  "optionsHeader": {
+    "message": "Link Finder Settings"
+  },
+  "optionExtractPlain": {
+    "message": "Also extract plain text links"
+  },
+  "optionLessStrict": {
+    "message": "Use less strict regex"
+  },
+  "settingsSaved": {
+    "message": "Settings saved."
   }
 }

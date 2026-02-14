@@ -1,3 +1,16 @@
+// Function to localize the page
+const localizePage = () => {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const messageKey = el.getAttribute('data-i18n');
+    const message = chrome.i18n.getMessage(messageKey);
+    if (message) {
+      // If it's an input/button, you might want to change 'value', 
+      // but for labels/headers, textContent is perfect.
+      el.textContent = message;
+    }
+  });
+};
+
 // Saves options to chrome.storage
 const saveOptions = () => {
   const extractPlainText = document.getElementById('extractPlainText').checked;
@@ -7,7 +20,7 @@ const saveOptions = () => {
     { extractPlainText, lessStrictRegex },
     () => {
       const status = document.getElementById('status');
-      status.textContent = 'Settings saved.';
+      status.textContent = chrome.i18n.getMessage("settingsSaved");;
       setTimeout(() => { status.textContent = ''; }, 1000);
     }
   );
@@ -24,6 +37,9 @@ const restoreOptions = () => {
   );
 };
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+document.addEventListener('DOMContentLoaded', () => {
+  localizePage();
+  restoreOptions();
+});
 document.getElementById('extractPlainText').addEventListener('change', saveOptions);
 document.getElementById('lessStrictRegex').addEventListener('change', saveOptions);

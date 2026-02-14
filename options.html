@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Link Finder Settings</title>
+  <title data-i18n="optionsTitle">Link Finder Settings</title>
   <style>
     body { font-family: system-ui; padding: 20px; width: 300px; }
     .option { margin-bottom: 15px; display: flex; align-items: center; }
     input { margin-right: 10px; }
+    #status { color: green; font-size: 0.9em; margin-top: 10px; }
   </style>
 </head>
 <body>
-  <h3>Link Finder Settings</h3>
+  <h3 data-i18n="optionsHeader">Link Finder Settings</h3>
+  
   <div class="option">
     <input type="checkbox" id="extractPlainText">
-    <label for="extractPlainText">Also extract plain text links</label>
+    <label for="extractPlainText" data-i18n="optionExtractPlain">Also extract plain text links</label>
   </div>
+  
   <div class="option">
     <input type="checkbox" id="lessStrictRegex">
-    <label for="lessStrictRegex">Use less strict regex</label>
+    <label for="lessStrictRegex" data-i18n="optionLessStrict">Use less strict regex</label>
   </div>
+  
   <div id="status"></div>
   <script src="options.js"></script>
 </body>

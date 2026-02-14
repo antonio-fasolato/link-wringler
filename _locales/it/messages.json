@@ -40,5 +40,20 @@
   "copyError": {
     "message": "Errore durante la copia negli appunti.",
     "description": "Messaggio di errore durante la copia"
+  },
+  "optionsTitle": {
+    "message": "Opzioni Link Finder"
+  },
+  "optionsHeader": {
+    "message": "Opzioni Link Finder"
+  },
+  "optionExtractPlain": {
+    "message": "Estrai anche i link dal testo semplice della pagina"
+  },
+  "optionLessStrict": {
+    "message": "Utilizza un'espressione regolare meno rigida"
+  },
+  "settingsSaved": {
+    "message": "Impostazioni salvate."
   }
 }
