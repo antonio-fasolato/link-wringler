@@ -1,4 +1,4 @@
-# 🔗 Link Wringer
+# 🧽🔗 Link Wringer
 
 **Effortlessly extract, open, and manage URLs from any text selection.**
 
