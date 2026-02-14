@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to create a release and upload assets
 
     steps:
       - name: Checkout code
@@ -29,3 +31,20 @@ jobs:
         with:
           name: chrome-extension-build
           path: ${{ env.ZIP_FILENAME }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.${{ env.BUILD_V }}
+          name: Release 1.${{ env.BUILD_V }}
+          draft: false
+          prerelease: false
+          files: ${{ env.ZIP_FILENAME }}
+          body: |
+            Automated build for Link Wringer.
+            Includes:
+            - Content scripts and background logic
+            - Localized resources (_locales)
+            - Extension icons and settings page
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
