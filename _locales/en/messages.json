@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Link Finder",
+    "message": "Link Wringer",
     "description": "Extension name"
   },
   "contextMenuOpenLinks": {
@@ -38,10 +38,10 @@
     "description": "Error message during copy operation"
   },
   "optionsTitle": {
-    "message": "Link Finder Settings"
+    "message": "Link Wringer Settings"
   },
   "optionsHeader": {
-    "message": "Link Finder Settings"
+    "message": "Link Wringer Settings"
   },
   "optionExtractPlain": {
     "message": "Also extract plain text links"
@@ -57,7 +57,7 @@
     "description": "Short description for the store"
   },
   "longDescription": {
-    "message": "Link Finder is the ultimate productivity tool for researchers, developers, and power users. Simply highlight a section of a webpage, right-click, and instantly manage all links within that selection.\n\nKey Features:\n- Open All Links: Launch every URL in the selection into new background tabs with one click.\n- Copy to Clipboard: Extract all URLs and save them to your clipboard as a clean list.\n- Plain Text Extraction: Advanced regex support finds URLs even if they aren't clickable links.\n- Customizable: Toggle between strict and relaxed URL detection in the settings.\n- Privacy Focused: Works entirely locally on your machine with no data collection.",
+    "message": "Link Wringer is the ultimate productivity tool for researchers, developers, and power users. Simply highlight a section of a webpage, right-click, and instantly manage all links within that selection.\n\nKey Features:\n- Open All Links: Launch every URL in the selection into new background tabs with one click.\n- Copy to Clipboard: Extract all URLs and save them to your clipboard as a clean list.\n- Plain Text Extraction: Advanced regex support finds URLs even if they aren't clickable links.\n- Customizable: Toggle between strict and relaxed URL detection in the settings.\n- Privacy Focused: Works entirely locally on your machine with no data collection.",
     "description": "The detailed description shown on the web store page"
   }
 }

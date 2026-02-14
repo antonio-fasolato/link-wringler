@@ -1,4 +1,4 @@
-# Link Finder - Estensione Chrome
+# Link Wringer - Estensione Chrome
 
 Un'estensione Chrome che trova tutti i link presenti in una selezione di testo sulla pagina e permette di aprirli o copiarli negli appunti.
 
@@ -16,7 +16,7 @@ Un'estensione Chrome che trova tutti i link presenti in una selezione di testo s
 2. Apri Chrome e vai su `chrome://extensions/`
 3. Attiva la "Modalità sviluppatore" nell'angolo in alto a destra
 4. Clicca su "Carica estensione non pacchettizzata"
-5. Seleziona la cartella del progetto `link-finder`
+5. Seleziona la cartella del progetto `link-wringer`
 
 ## Come usare
 
@@ -46,7 +46,7 @@ Il file [`manifest.json`](manifest.json:12) richiede tre icone (16x16, 48x48, 12
 ## Struttura del progetto
 
 ```
-link-finder/
+link-wringer/
 ├── manifest.json    # Configurazione dell'estensione
 ├── background.js    # Gestione del menu contestuale
 ├── content.js       # Logica per trovare e aprire i link

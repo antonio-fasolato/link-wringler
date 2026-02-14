@@ -1,7 +1,7 @@
 // Creazione dei menu contestuali quando l'estensione viene installata
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    id: "linkFinder",
+    id: "linkWringer",
     title: chrome.i18n.getMessage("contextMenuOpenLinks"), 
     contexts: ["selection"]
   });
@@ -15,7 +15,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Gestione del click sui menu contestuali
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === "linkFinder") {
+  if (info.menuItemId === "linkWringer") {
     // Invia un messaggio al content script per aprire i link
     chrome.tabs.sendMessage(tab.id, {
       action: "findAndOpenLinks"

@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Link Finder",
+    "message": "Link Wringer",
     "description": "Nome dell'estensione"
   },
   "contextMenuOpenLinks": {
@@ -38,10 +38,10 @@
     "description": "Messaggio di errore durante la copia"
   },
   "optionsTitle": {
-    "message": "Opzioni Link Finder"
+    "message": "Opzioni Link Wringer"
   },
   "optionsHeader": {
-    "message": "Opzioni Link Finder"
+    "message": "Opzioni Link Wringer"
   },
   "optionExtractPlain": {
     "message": "Estrai anche i link dal testo semplice della pagina"
@@ -57,7 +57,7 @@
   "description": "Breve descrizione per lo store"
 },
 "longDescription": {
-  "message": "Link Finder è lo strumento di produttività definitivo per ricercatori, sviluppatori e utenti esperti. Basta evidenziare una sezione di una pagina web, fare clic con il tasto destro e gestire istantaneamente tutti i link contenuti.\n\nCaratteristiche principali:\n- Apri tutti i link: Apri ogni URL della selezione in nuove schede con un solo clic.\n- Copia negli appunti: Estrai tutti gli URL e salvali come elenco pulito.\n- Estrazione testo semplice: Il supporto regex avanzato trova gli URL anche se non sono link cliccabili.\n- Personalizzabile: Scegli tra rilevamento URL rigoroso o flessibile nelle impostazioni.\n- Rispetto della privacy: Funziona interamente in locale senza alcuna raccolta dati.",
+  "message": "Link Wringer è lo strumento di produttività definitivo per ricercatori, sviluppatori e utenti esperti. Basta evidenziare una sezione di una pagina web, fare clic con il tasto destro e gestire istantaneamente tutti i link contenuti.\n\nCaratteristiche principali:\n- Apri tutti i link: Apri ogni URL della selezione in nuove schede con un solo clic.\n- Copia negli appunti: Estrai tutti gli URL e salvali come elenco pulito.\n- Estrazione testo semplice: Il supporto regex avanzato trova gli URL anche se non sono link cliccabili.\n- Personalizzabile: Scegli tra rilevamento URL rigoroso o flessibile nelle impostazioni.\n- Rispetto della privacy: Funziona interamente in locale senza alcuna raccolta dati.",
   "description": "La descrizione dettagliata mostrata nella pagina dello store"
 }
 }
