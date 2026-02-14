@@ -1,0 +1,63 @@
+{
+  "extName": {
+    "message": "Link Wringer",
+    "description": "Nome dell'estensione"
+  },
+  "contextMenuOpenLinks": {
+    "message": "Apri tutti i link nella selezione",
+    "description": "Voce del menu contestuale per aprire i link"
+  },
+  "contextMenuCopyLinks": {
+    "message": "Copia tutti i link nella selezione",
+    "description": "Voce del menu contestuale per copiare i link"
+  },
+  "noTextSelected": {
+    "message": "Nessun testo selezionato. Per favore, seleziona una porzione della pagina che contiene link.",
+    "description": "Messaggio quando non c'è testo selezionato"
+  },
+  "noLinksFound": {
+    "message": "Nessun link trovato nella selezione.",
+    "description": "Messaggio quando non ci sono link nella selezione"
+  },
+  "noValidLinksFound": {
+    "message": "Nessun link valido trovato nella selezione.",
+    "description": "Messaggio quando non ci sono link validi nella selezione"
+  },
+  "linksCopied": {
+    "message": "$COUNT$ link copiati negli appunti.",
+    "description": "Messaggio di conferma per i link copiati",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "copyError": {
+    "message": "Errore durante la copia negli appunti.",
+    "description": "Messaggio di errore durante la copia"
+  },
+  "optionsTitle": {
+    "message": "Opzioni Link Wringer"
+  },
+  "optionsHeader": {
+    "message": "Opzioni Link Wringer"
+  },
+  "optionExtractPlain": {
+    "message": "Estrai anche i link dal testo semplice della pagina"
+  },
+  "optionLessStrict": {
+    "message": "Utilizza un'espressione regolare meno rigida"
+  },
+  "settingsSaved": {
+    "message": "Impostazioni salvate."
+  },
+"extDescription": {
+  "message": "Estrai, apri o copia rapidamente tutti i link dalla tua selezione. Supporta sia i tag HTML che gli URL in formato testo semplice.",
+  "description": "Breve descrizione per lo store"
+},
+"longDescription": {
+  "message": "Link Wringer è lo strumento di produttività definitivo per ricercatori, sviluppatori e utenti esperti. Basta evidenziare una sezione di una pagina web, fare clic con il tasto destro e gestire istantaneamente tutti i link contenuti.\n\nCaratteristiche principali:\n- Apri tutti i link: Apri ogni URL della selezione in nuove schede con un solo clic.\n- Copia negli appunti: Estrai tutti gli URL e salvali come elenco pulito.\n- Estrazione testo semplice: Il supporto regex avanzato trova gli URL anche se non sono link cliccabili.\n- Personalizzabile: Scegli tra rilevamento URL rigoroso o flessibile nelle impostazioni.\n- Rispetto della privacy: Funziona interamente in locale senza alcuna raccolta dati.",
+  "description": "La descrizione dettagliata mostrata nella pagina dello store"
+}
+}

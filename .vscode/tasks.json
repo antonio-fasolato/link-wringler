@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Zip Extension",
+      "type": "shell",
+      "command": "zip -r link-wringer-extension-local.zip _locales icons *.js *.html manifest.json -x '*.DS_Store*'",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
