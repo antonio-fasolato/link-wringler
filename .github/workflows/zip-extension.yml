@@ -24,7 +24,7 @@ jobs:
           ZIP_NAME="link-wringer-extension-1.${V_NUMBER}.zip"
           
           # Zip the specific files and directories requested
-          zip -r "$ZIP_NAME" _locales icons *.js *.html manifest.json -x "*.DS_Store*"
+          zip -r "$ZIP_NAME" _locales icon*.png *.js *.html manifest.json -x "*.DS_Store*"
           
           # Export variables for later steps
           echo "ZIP_FILENAME=$ZIP_NAME" >> $GITHUB_ENV
