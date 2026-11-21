@@ -1,24 +1,22 @@
 Privacy Policy for Link Wringer
-Last Updated: February 2026
+Last Updated: November 2026
 
 Link Wringer is committed to protecting your privacy. This Privacy Policy explains our practices regarding the collection, use, and disclosure of information through our Chrome Extension.
 
 1. Data Collection
-Link Wringer does not collect, store, or transmit any personal data. * All processing of text selections and URL extraction happens locally on your machine.
-
-We do not have access to your browsing history, your IP address, or the content of the pages you visit, except for the specific text you highlight and interact with via the context menu.
+The declared content script runs on supported pages and processes the current selection locally to detect links and show the action buttons. Link Wringer does not collect or retain browsing history, page selections, or extracted URLs.
 
 2. Data Usage
 The extension uses the following permissions solely for functional purposes:
 
-activeTab & scripting: To identify URLs within your highlighted text when you trigger the "Open" or "Copy" actions.
+contextMenus: To add Open Links and Copy Links commands to the selection's context menu.
 
-storage: To save your local preferences, such as whether to include plain-text links or which regex strictness to use.
+storage: To save preferences, such as whether to include plain-text links or which regex strictness to use, through Chrome's `chrome.storage.sync` API.
 
 clipboardWrite: To allow you to copy the extracted list of links to your clipboard.
 
 3. Data Transmission
-No data is ever sent to the internet. Link Wringer does not communicate with any external servers or third-party analytics services. All "Link Wringing" logic is contained entirely within the extension package.
+Link extraction runs locally, and the extension does not send selections or extracted links to analytics services. When you choose Open Links, Chrome connects to the selected destinations. Chrome may sync your preferences according to your browser settings.
 
 4. Third-Party Access
 Since we do not collect any data, we do not share, sell, or trade any information with third parties.
