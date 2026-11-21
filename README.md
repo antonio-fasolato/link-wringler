@@ -58,12 +58,10 @@ link-wringer/
 This extension is built with the **Manifest V3** standard, prioritizing security and performance. It uses the following permissions:
 
 * `contextMenus`: To add "Open" and "Copy" actions to your right-click menu.
-* `activeTab`: To access the selection on your currently active page.
-* `scripting`: To execute the extraction logic.
-* `storage`: To save your custom preferences.
+* `storage`: To save your preferences with `chrome.storage.sync`.
 * `clipboardWrite`: To save extracted links to your clipboard.
 
-**Privacy Note:** Link Wringer works entirely locally. No browsing data, selections, or URLs are ever collected, stored, or transmitted to external servers.
+The declared content script runs on supported pages, checks the current selection for links, and displays the action buttons when it finds any. Link extraction takes place locally. The extension does not collect or transmit browsing data or selections. Choosing Open Links navigates Chrome to the extracted destinations.
 
 ---
 
