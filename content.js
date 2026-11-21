@@ -85,7 +85,7 @@ async function findAndOpenLinks(selection = getPageSelection()) {
     return;
   }
 
-  allUrls.forEach(url => window.open(url, "_blank", "noopener"));
+  await chrome.runtime.sendMessage({ action: "openLinksInBackground", urls: [...allUrls] });
 }
 
 async function findAndCopyLinks(selection = getPageSelection()) {
