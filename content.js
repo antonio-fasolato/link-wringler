@@ -17,9 +17,7 @@ async function getSettings() {
   });
 }
 
-async function extractTextualLinks(selectedText) {
-  const settings = await getSettings();
-  
+function extractTextualLinks(selectedText, settings) {
   if (!settings.extractPlainText) return [];
 
   // Strict: Needs protocol or www.
@@ -66,15 +64,21 @@ function normalizeUrl(url) {
   return url.toLowerCase().startsWith("http") ? url : `https://${url}`;
 }
 
+function extractSelectionLinks(selection, settings) {
+  return {
+    anchorUrls: extractAnchorLinks(selection.range),
+    textualUrls: extractTextualLinks(selection.text, settings)
+  };
+}
+
 async function findAndOpenLinks(selection = getPageSelection()) {
   if (!selection) {
     alert(chrome.i18n.getMessage("noTextSelected"));
     return;
   }
 
-  const urls = extractAnchorLinks(selection.range);
-  const urlsFromText = await extractTextualLinks(selection.text);
-  const allUrls = new Set([...urls, ...urlsFromText].map(normalizeUrl));
+  const { anchorUrls, textualUrls } = extractSelectionLinks(selection, await getSettings());
+  const allUrls = new Set([...anchorUrls, ...textualUrls].map(normalizeUrl));
 
   if (allUrls.size === 0) {
     alert(chrome.i18n.getMessage("noValidLinksFound"));
@@ -90,9 +94,8 @@ async function findAndCopyLinks(selection = getPageSelection()) {
     return;
   }
 
-  const urls = extractAnchorLinks(selection.range);
-  const textualUrls = await extractTextualLinks(selection.text);
-  textualUrls.forEach(url => urls.add(normalizeUrl(url)));
+  const { anchorUrls, textualUrls } = extractSelectionLinks(selection, await getSettings());
+  const urls = new Set([...anchorUrls, ...textualUrls.map(normalizeUrl)]);
 
   if (urls.size === 0) {
     alert(chrome.i18n.getMessage("noValidLinksFound"));
@@ -185,6 +188,10 @@ function initSelectionActions() {
   host.hidden = true;
 
   let savedSelection = null;
+  let settings = null;
+  let settingsVersion = 0;
+  let needsLinkCheck = true;
+  let hasLinks = false;
   let selecting = false;
   let frame = 0;
 
@@ -201,7 +208,7 @@ function initSelectionActions() {
     button.append(icon);
     button.addEventListener("click", event => {
       event.stopPropagation();
-      if (event.isTrusted && savedSelection) action(savedSelection);
+      if (event.isTrusted && hasLinks && !needsLinkCheck && settings) action(savedSelection);
     });
     shadow.append(button);
   }
@@ -211,14 +218,25 @@ function initSelectionActions() {
 
   function updateToolbar() {
     frame = 0;
-    if (selecting) {
+    if (selecting || !settings) {
       host.hidden = true;
       return;
     }
 
-    // Tabbing into the buttons can collapse the page's live selection.
-    if (!shadow.activeElement) savedSelection = getPageSelection();
-    if (!savedSelection) {
+    if (needsLinkCheck) {
+      needsLinkCheck = false;
+      const selection = getPageSelection();
+      // Tabbing into the buttons can collapse the page's live selection.
+      if (selection || !shadow.activeElement) savedSelection = selection;
+
+      hasLinks = false;
+      if (savedSelection) {
+        const { anchorUrls, textualUrls } = extractSelectionLinks(savedSelection, settings);
+        hasLinks = anchorUrls.size > 0 || textualUrls.length > 0;
+      }
+    }
+
+    if (!hasLinks) {
       host.hidden = true;
       return;
     }
@@ -246,6 +264,22 @@ function initSelectionActions() {
     if (!frame) frame = requestAnimationFrame(updateToolbar);
   }
 
+  function scheduleLinkCheck() {
+    needsLinkCheck = true;
+    scheduleUpdate();
+  }
+
+  async function refreshSettings() {
+    const version = ++settingsVersion;
+    settings = null;
+    host.hidden = true;
+    const currentSettings = await getSettings();
+    if (version !== settingsVersion) return;
+
+    settings = currentSettings;
+    scheduleLinkCheck();
+  }
+
   window.addEventListener("pointerdown", event => {
     if (event.button === 0 && event.target !== host) {
       selecting = true;
@@ -254,20 +288,24 @@ function initSelectionActions() {
   }, true);
 
   function endSelection() {
+    if (!selecting) return;
     selecting = false;
-    scheduleUpdate();
+    scheduleLinkCheck();
   }
 
   // Prevent a mouse click on the toolbar from clearing the selection.
   shadow.addEventListener("mousedown", event => event.preventDefault());
-  shadow.addEventListener("focusout", scheduleUpdate);
+  shadow.addEventListener("focusout", scheduleLinkCheck);
   window.addEventListener("pointerup", endSelection, true);
   window.addEventListener("pointercancel", endSelection, true);
   window.addEventListener("blur", endSelection);
   window.addEventListener("scroll", scheduleUpdate, { capture: true, passive: true });
   window.addEventListener("resize", scheduleUpdate);
-  document.addEventListener("selectionchange", scheduleUpdate);
-  scheduleUpdate();
+  document.addEventListener("selectionchange", scheduleLinkCheck);
+  chrome.storage.sync.onChanged.addListener(changes => {
+    if (changes.extractPlainText || changes.lessStrictRegex) refreshSettings();
+  });
+  refreshSettings();
 }
 
 if (document.body) initSelectionActions();
