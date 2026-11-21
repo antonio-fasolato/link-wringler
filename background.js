@@ -13,6 +13,21 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+chrome.runtime.onMessage.addListener((request, sender) => {
+  if (request.action !== "openLinksInBackground" || !sender.tab || !Array.isArray(request.urls)) {
+    return;
+  }
+
+  const { windowId } = sender.tab;
+  for (const url of request.urls) {
+    if (typeof url !== "string" || !/^https?:\/\//i.test(url)) continue;
+
+    chrome.tabs.create({ url, windowId, active: false }).catch(error => {
+      console.error("Could not open a background tab:", error);
+    });
+  }
+});
+
 // Gestione del click sui menu contestuali
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "linkWringer") {

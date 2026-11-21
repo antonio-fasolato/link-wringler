@@ -30,13 +30,10 @@ Link Wringer is a lightweight, privacy-focused Chrome extension designed for pow
 ## 📖 How to Use
 
 1. **Select**: Highlight any portion of text on a webpage.
-2. **Right-Click**: Open the context menu on your selection.
-3. **Choose Action**:
-* **Open Links**: Launches all URLs into new tabs.
-* **Copy Links**: Copies a newline-separated list of URLs to your clipboard.
-
-
-4. **Configure**: Right-click the extension icon and select **Options** to customize link detection behavior.
+2. **Choose an action** using the buttons at the top right of the selection or the selection's context menu. The buttons appear when Link Wringer detects at least one link with your current settings.
+   * **Copy Links** copies a newline-separated list of URLs to your clipboard.
+   * **Open Links** opens the URLs in new tabs.
+3. **Configure**: Right-click the extension icon and select **Options** to customize link detection behavior.
 
 ---
 
