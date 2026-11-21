@@ -1,5 +1,5 @@
 // Listener per i messaggi dal background script
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request) => {
   if (request.action === "findAndOpenLinks") {
     findAndOpenLinks();
   } else if (request.action === "findAndCopyLinks") {
@@ -35,87 +35,239 @@ async function extractTextualLinks(selectedText) {
   return cleanUrls;
 }
 
-async function findAndOpenLinks() {
+function getPageSelection() {
   const selection = window.getSelection();
-  if (!selection || selection.toString().trim() === "") {
-    alert(chrome.i18n.getMessage("noTextSelected"));
-    return;
-  }
-  
-  const range = selection.getRangeAt(0);
-  const container = document.createElement("div");
-  container.appendChild(range.cloneContents());
-  
-  const links = container.querySelectorAll("a[href]");
+  const text = selection?.toString().trim();
+  if (!text || !selection.rangeCount) return null;
+
+  return { text, range: selection.getRangeAt(0).cloneRange() };
+}
+
+function extractAnchorLinks(range) {
   const urls = new Set();
-  links.forEach(link => {
+  const addLink = (link) => {
     const href = link.href;
     if (href && !href.startsWith("#") && !href.startsWith("javascript:")) {
       urls.add(href);
     }
-  });
+  };
 
-  const urlsFromText = await extractTextualLinks(selection.toString().trim());
-  const allUrls = [...new Set([...urls, ...urlsFromText])];
+  // A range wholly inside a link does not include that link in cloneContents().
+  const ancestor = range.commonAncestorContainer;
+  const element = ancestor.nodeType === Node.ELEMENT_NODE ? ancestor : ancestor.parentElement;
+  const enclosingLink = element?.closest("a[href]");
+  if (enclosingLink) addLink(enclosingLink);
 
-  if (allUrls.length === 0) {
-    alert(chrome.i18n.getMessage("noValidLinksFound"));
-    return;
-  }
-  
-  allUrls.forEach(url => {
-    // Basic normalization for strings found via regex without protocol
-    const validUrl = url.toLowerCase().startsWith('http') ? url : `https://${url}`;
-    window.open(validUrl, "_blank");
-  });
+  range.cloneContents().querySelectorAll("a[href]").forEach(addLink);
+  return urls;
 }
 
-async function findAndCopyLinks() {
-  const selection = window.getSelection();
-  
-  if (!selection || selection.toString().trim() === "") {
+function normalizeUrl(url) {
+  return url.toLowerCase().startsWith("http") ? url : `https://${url}`;
+}
+
+async function findAndOpenLinks(selection = getPageSelection()) {
+  if (!selection) {
     alert(chrome.i18n.getMessage("noTextSelected"));
     return;
   }
 
-  // 1. Extract links from <a> tags
-  const range = selection.getRangeAt(0);
-  const container = document.createElement("div");
-  container.appendChild(range.cloneContents());
-  const linkTags = container.querySelectorAll("a[href]");
-  
-  const tagUrls = new Set();
-  linkTags.forEach(link => {
-    const href = link.href;
-    if (href && !href.startsWith("#") && !href.startsWith("javascript:")) {
-      tagUrls.add(href);
-    }
-  });
+  const urls = extractAnchorLinks(selection.range);
+  const urlsFromText = await extractTextualLinks(selection.text);
+  const allUrls = new Set([...urls, ...urlsFromText].map(normalizeUrl));
 
-  // 2. Extract links from plain text (Respects your 2 new checkboxes)
-  const textualUrls = await extractTextualLinks(selection.toString().trim());
-
-  // 3. Merge and Normalize
-  // Ensure we don't have duplicates and add https:// to naked domains from regex
-  const finalUrls = new Set([...tagUrls]);
-  textualUrls.forEach(url => {
-    const normalized = url.toLowerCase().startsWith('http') ? url : `https://${url}`;
-    finalUrls.add(normalized);
-  });
-
-  if (finalUrls.size === 0) {
+  if (allUrls.size === 0) {
     alert(chrome.i18n.getMessage("noValidLinksFound"));
     return;
   }
-  
-  const linksText = Array.from(finalUrls).join("\n");
 
-  // 4. Copy to clipboard
-  navigator.clipboard.writeText(linksText).then(() => {
-    const successMsg = chrome.i18n.getMessage("linksCopied", [finalUrls.size.toString()]);
-    alert(successMsg);
-  }).catch(err => {
-    console.error("Error:", err);
-    alert(chrome.i18n.getMessage("copyError"));
-  });
+  allUrls.forEach(url => window.open(url, "_blank", "noopener"));
 }
+
+async function findAndCopyLinks(selection = getPageSelection()) {
+  if (!selection) {
+    alert(chrome.i18n.getMessage("noTextSelected"));
+    return;
+  }
+
+  const urls = extractAnchorLinks(selection.range);
+  const textualUrls = await extractTextualLinks(selection.text);
+  textualUrls.forEach(url => urls.add(normalizeUrl(url)));
+
+  if (urls.size === 0) {
+    alert(chrome.i18n.getMessage("noValidLinksFound"));
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText([...urls].join("\n"));
+    alert(chrome.i18n.getMessage("linksCopied", [urls.size.toString()]));
+  } catch (error) {
+    console.error("Error:", error);
+    alert(chrome.i18n.getMessage("copyError"));
+  }
+}
+
+function initSelectionActions() {
+  const host = document.createElement("link-wringer-actions");
+  const shadow = host.attachShadow({ mode: "closed" });
+  const styles = new CSSStyleSheet();
+  styles.replaceSync(`
+    :host {
+      all: initial;
+      position: fixed;
+      z-index: 2147483647;
+      display: flex;
+      gap: 2px;
+      padding: 3px;
+      border: 1px solid #475569;
+      border-radius: 9px;
+      background: #172033;
+      box-shadow: 0 3px 10px #0004;
+      color: #fff;
+      direction: ltr;
+      user-select: none;
+    }
+    :host([hidden]) { display: none !important; }
+    button {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    button:hover { background: #334155; }
+    button:focus-visible { outline: 2px solid #93c5fd; outline-offset: -2px; }
+    .icon {
+      position: relative;
+      display: block;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+    .icon::before, .icon::after {
+      position: absolute;
+      box-sizing: border-box;
+    }
+    .copy::before, .copy::after {
+      content: "";
+      width: 10px;
+      height: 12px;
+      border: 1.5px solid currentColor;
+      border-radius: 2px;
+    }
+    .copy::before { top: 0; left: 1px; }
+    .copy::after { bottom: 0; right: 1px; background: #172033; }
+    button:hover .copy::after { background: #334155; }
+    .open::before {
+      content: "";
+      bottom: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border: 1.5px solid currentColor;
+      border-radius: 2px;
+      clip-path: polygon(0 0, 45% 0, 45% 45%, 100% 45%, 100% 100%, 0 100%);
+    }
+    .open::after {
+      content: "↗";
+      top: -5px;
+      right: -2px;
+      font: bold 18px/1 system-ui, sans-serif;
+    }
+  `);
+  shadow.adoptedStyleSheets = [styles];
+  host.hidden = true;
+
+  let savedSelection = null;
+  let selecting = false;
+  let frame = 0;
+
+  function addButton(message, iconClass, action) {
+    const button = document.createElement("button");
+    const label = chrome.i18n.getMessage(message);
+    button.type = "button";
+    button.title = label;
+    button.setAttribute("aria-label", label);
+
+    const icon = document.createElement("span");
+    icon.className = `icon ${iconClass}`;
+    icon.setAttribute("aria-hidden", "true");
+    button.append(icon);
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      if (event.isTrusted && savedSelection) action(savedSelection);
+    });
+    shadow.append(button);
+  }
+
+  addButton("contextMenuCopyLinks", "copy", findAndCopyLinks);
+  addButton("contextMenuOpenLinks", "open", findAndOpenLinks);
+
+  function updateToolbar() {
+    frame = 0;
+    if (selecting) {
+      host.hidden = true;
+      return;
+    }
+
+    // Tabbing into the buttons can collapse the page's live selection.
+    if (!shadow.activeElement) savedSelection = getPageSelection();
+    if (!savedSelection) {
+      host.hidden = true;
+      return;
+    }
+
+    const rect = savedSelection.range.getBoundingClientRect();
+    const { clientWidth, clientHeight } = document.documentElement;
+    if (rect.width === 0 || rect.height === 0 || rect.bottom <= 0 ||
+        rect.top >= clientHeight || rect.right <= 0 || rect.left >= clientWidth) {
+      host.hidden = true;
+      return;
+    }
+
+    if (!host.isConnected) document.body.append(host);
+    host.hidden = false;
+    const { width, height } = host.getBoundingClientRect();
+    const gap = 6;
+    const above = rect.top - height - gap;
+    const below = rect.bottom + gap;
+    const top = above >= gap || below + height > clientHeight - gap ? above : below;
+    host.style.left = `${Math.max(gap, Math.min(rect.right - width, clientWidth - width - gap))}px`;
+    host.style.top = `${Math.max(gap, Math.min(top, clientHeight - height - gap))}px`;
+  }
+
+  function scheduleUpdate() {
+    if (!frame) frame = requestAnimationFrame(updateToolbar);
+  }
+
+  window.addEventListener("pointerdown", event => {
+    if (event.button === 0 && event.target !== host) {
+      selecting = true;
+      scheduleUpdate();
+    }
+  }, true);
+
+  function endSelection() {
+    selecting = false;
+    scheduleUpdate();
+  }
+
+  // Prevent a mouse click on the toolbar from clearing the selection.
+  shadow.addEventListener("mousedown", event => event.preventDefault());
+  shadow.addEventListener("focusout", scheduleUpdate);
+  window.addEventListener("pointerup", endSelection, true);
+  window.addEventListener("pointercancel", endSelection, true);
+  window.addEventListener("blur", endSelection);
+  window.addEventListener("scroll", scheduleUpdate, { capture: true, passive: true });
+  window.addEventListener("resize", scheduleUpdate);
+  document.addEventListener("selectionchange", scheduleUpdate);
+  scheduleUpdate();
+}
+
+if (document.body) initSelectionActions();
